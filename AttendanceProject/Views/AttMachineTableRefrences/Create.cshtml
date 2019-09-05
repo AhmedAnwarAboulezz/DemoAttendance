@@ -1,0 +1,91 @@
+﻿@model AttendanceProject.Models.AttMachineTableRefrence
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>AttMachineTableRefrence</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.MachineID, "MachineID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select class="form-control" id="MachineID" name="MachineID" required>
+                    <option value=""> -- Please Select Major First --</option>
+                    @foreach (var item in ViewBag.MachineID)
+                    {
+                        <option value="@item.MachId" data-senarios="@item.Senario.Id">@item.MachineName</option>
+                    }
+                </select>
+                @*@Html.DropDownList("MachineID", null, htmlAttributes: new { @class = "form-control" })*@
+                @Html.ValidationMessageFor(model => model.MachineID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group Tablediv">
+            @Html.LabelFor(model => model.TableID, "TableID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select class="form-control" id="TableID" name="TableID" required>
+                    <option value=""> -- Choose from Tables -- </option>
+                    @foreach (var item in ViewBag.TableID)
+                    {
+                        <option value="@item.TableId" data-senarios="@item.Senario.Id">@item.ColumnDefination</option>
+                    }
+                </select>
+                @*@Html.DropDownList("TableID", null, htmlAttributes: new { @class = "form-control" })*@
+                @Html.ValidationMessageFor(model => model.TableID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(".Tablediv").hide();
+
+
+        $("#MachineID").change(function () {
+            var senario = $(this).find(':selected').data('senarios');
+            if (senario != null && senario != "") {
+                $(".Tablediv").show();
+                $('#TableID').val('');
+                $('#TableID option').each(function () {
+                    var datasenario = $(this).data('senarios');
+                    if (datasenario == senario) {
+                        $(this).show();
+                    }
+                    else {
+                        $(this).hide();
+                    }
+                });
+            }
+            else {
+                $(".Tablediv").hide();
+            }
+        });
+    </script>
+
+
+
+}

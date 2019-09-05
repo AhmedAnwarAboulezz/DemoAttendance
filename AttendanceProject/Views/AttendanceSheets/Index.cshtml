@@ -1,0 +1,47 @@
+﻿@model IEnumerable<AttendanceProject.Models.AttTableDefination>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .btn-success {
+        background-color: #388425;
+        border-color: #348637;
+        font-size: 17px;
+        width: 88%;
+    }
+</style>
+<h2>Index</h2>
+
+
+<div class="form-horizontal">
+    <h4>AttendanceSheet</h4>
+    <hr />
+@using (Html.BeginForm("Download", "AttendanceSheets", null, FormMethod.Post, new { enctype = "multipart/form-data", id = "uploadForm" }))
+{
+    <div class="form-group Tablediv">
+        <label class="control-label col-md-2">Choose Table</label>
+        <div class="col-md-6">
+            <select class="form-control" id="TableID" name="TableID" required>
+                <option value=""> -- Choose from Tables -- </option>
+                @foreach (var item in Model)
+                {
+                    <option value="@item.TableId">@item.ColumnDefination</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-1">
+            <input class="form-control" type="number" name="noofdays" required />
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-success btn-labeled"><span class="fa fa-download"></span>  Download Template</button>
+        </div>
+    </div>
+    
+
+}
+
+</div>
+
+

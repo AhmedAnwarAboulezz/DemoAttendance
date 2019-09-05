@@ -1,0 +1,51 @@
+﻿@model AttendanceProject.Models.AttTableDefination
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AttTableDefination</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ColumnDefination)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ColumnDefination)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ColumnOrder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ColumnOrder)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDeleted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Senario.SenarioName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Senario.SenarioName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TableId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

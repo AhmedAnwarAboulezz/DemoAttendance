@@ -1,0 +1,195 @@
+﻿@model AttendanceProject.Models.AttTableDefination
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
+<link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet" />
+<style>
+    .chosen-container {
+        width: 100% !important;
+    }
+        .chosen-container .chosen-results li.active-result {
+            padding: 20px;
+        }
+</style>
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal" style="min-height: 375px;">
+        <h4>AttTableDefination</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.SenarioID, "SenarioID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("SenarioID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SenarioID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ColumnDefination, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div id="SelectSenarioDiv_1">
+                    <select id="SelectSenario_1" data-placeholder="Begin typing a name to select Product..." multiple class="brand-select1">
+                        <option value=""></option>
+                        @for (var i = 0; i < ViewBag.DefinationColumns.Count; i++)
+                        {
+                            foreach (var item in ViewBag.senario1)
+                            {
+                                if (item == i)
+                                {
+                                    <option value="@i">@ViewBag.DefinationColumns[i]</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+                <div id="SelectSenarioDiv_2">
+                    <select id="SelectSenario_2" data-placeholder="Begin typing a name to select Product..." multiple class="brand-select2">
+                        <option value=""></option>
+                        @for (var i = 0; i < ViewBag.DefinationColumns.Count; i++)
+                        {
+                            foreach (var item in ViewBag.senario2)
+                            {
+                                if (item == i)
+                                {
+                                    <option value="@i">@ViewBag.DefinationColumns[i]</option>
+                                }
+                            }
+                        }
+                    </select>
+
+                </div>
+
+                @Html.EditorFor(model => model.ColumnDefination, new { htmlAttributes = new { @class = "form-control hidden" } })
+                @Html.ValidationMessageFor(model => model.ColumnDefination, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group hidden">
+            @Html.LabelFor(model => model.ColumnOrder, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ColumnOrder, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ColumnOrder, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Save" onclick="Savechange()" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default submitbtn hidden"/>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        var namess1, namess2, idss1, idss2  = [];
+        function Savechange() {
+            var x = $("#SenarioID").val();
+            if (x == 1) {
+                if (namess1.length == idss1.length) {
+                    var inputname = "";
+                    var inputid = "";
+                    for (var i = namess1.length - 1; i >= 0; i--) {
+                        if (inputname == "") {
+                            inputname = namess1[i];
+                            inputid = idss1[i];
+                        }
+                        else {
+                            inputname = namess1[i] + "," + inputname;
+                            inputid = idss1[i] + "," + inputid;
+                        }
+                    }
+                    $("#ColumnDefination").val(inputname);
+                    $("#ColumnOrder").val(inputid);
+                }
+            }
+            else if (x == 2) {
+                if (namess2.length == idss2.length) {
+                    var inputname = "";
+                    var inputid = "";
+                    for (var i = namess2.length - 1; i >= 0; i--) {
+                        if (inputname == "") {
+                            inputname = namess2[i];
+                            inputid = idss2[i];
+                        }
+                        else {
+                            inputname = namess2[i] + "," + inputname;
+                            inputid = idss2[i] + "," + inputid;
+                        }
+                    }
+                    $("#ColumnDefination").val(inputname);
+                    $("#ColumnOrder").val(inputid);
+                }
+            }
+            $(".submitbtn").trigger("click");           
+        }
+        //function UpdateChanges(parameter, senid) {
+        //    var x = $("#SenarioID").val();
+        //    if (x != senid) {
+        //        $("#SenarioID").val(senid)
+        //    }
+        //    var mm = $(parameter).val();
+        //    alert(mm);
+        //    //$("#ColumnDefination").val("ffff");
+        //    //$("#ColumnOrder").val(parameter.value);
+        //}
+        $(document).ready(function () {
+            $(".brand-select1").chosen({ no_results_text: "Oops, nothing found!" }).change(function () {
+                namess1 = [];
+                idss1 = [];
+                $("#SelectSenarioDiv_1 .search-choice").each(function () {
+                    var spans = $(this).find("span").html();
+                    var hrefs = $(this).find("a").attr("data-option-array-index");
+                    namess1.push(spans);
+                    idss1.push(hrefs);
+                });                
+            });
+            $(".brand-select2").chosen({ no_results_text: "Oops, nothing found!" }).change(function () {
+                namess2 = [];
+                idss2 = [];
+                $("#SelectSenarioDiv_2 .search-choice").each(function () {
+                    var spans = $(this).find("span").html();
+                    var hrefs = $(this).find("a").attr("data-option-array-index");
+                    namess2.push(spans);
+                    idss2.push(hrefs);
+                });
+            });
+
+
+            $("#SelectSenarioDiv_2").hide();
+
+            $("#SenarioID").change(function () {
+                var m = this.value;
+                debugger;
+                if (m == 1) {
+                    $("#SelectSenarioDiv_2").hide();
+                    $("#SelectSenarioDiv_1").show();
+
+                }
+                if (m == 2) {
+                    $("#SelectSenarioDiv_1").hide();
+                    $("#SelectSenarioDiv_2").show();
+                }
+            });
+        });
+    </script>
+}

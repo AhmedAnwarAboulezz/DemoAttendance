@@ -1,0 +1,46 @@
+﻿@model IEnumerable<AttendanceProject.Models.AttMachine>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MachineName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Senario.SenarioName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MachineName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsDeleted)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Senario.SenarioName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MachId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MachId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MachId })
+        </td>
+    </tr>
+}
+
+</table>
