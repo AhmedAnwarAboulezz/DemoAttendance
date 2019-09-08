@@ -10,37 +10,39 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.MachineName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Senario.SenarioName)
-        </th>
-        <th></th>
-    </tr>
+<table class="table"  id="table33">
+    <thead>
+        <tr>
+            <th>Machine ID</th>
+            <th>
+                @Html.DisplayNameFor(model => model.MachineName)
+            </th>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.MachineName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsDeleted)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Senario.SenarioName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MachId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MachId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MachId })
-        </td>
-    </tr>
-}
-
+            <th>
+                @Html.DisplayNameFor(model => model.Senario.SenarioName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MachId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MachineName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Senario.SenarioName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.MachId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.MachId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.MachId })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>

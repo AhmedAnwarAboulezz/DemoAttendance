@@ -1175,7 +1175,6 @@
     <Content Include="Scripts\Summernote\font\summernote.eot" />
     <Content Include="Scripts\Summernote\font\summernote.ttf" />
     <Content Include="Scripts\Summernote\font\summernote.woff" />
-    <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\AttMachines\Create.cshtml" />
     <Content Include="Views\AttMachines\Delete.cshtml" />
     <Content Include="Views\AttMachines\Details.cshtml" />
@@ -1191,10 +1190,6 @@
     <Content Include="Views\Employees\Details.cshtml" />
     <Content Include="Views\Employees\Edit.cshtml" />
     <Content Include="Views\Employees\Index.cshtml" />
-    <Content Include="Views\AttendanceLogs\Create.cshtml" />
-    <Content Include="Views\AttendanceLogs\Delete.cshtml" />
-    <Content Include="Views\AttendanceLogs\Details.cshtml" />
-    <Content Include="Views\AttendanceLogs\Edit.cshtml" />
     <Content Include="Views\AttendanceLogs\Index.cshtml" />
     <Content Include="Views\AttMachineTableRefrences\Create.cshtml" />
     <Content Include="Views\AttMachineTableRefrences\Delete.cshtml" />
@@ -1203,9 +1198,12 @@
     <Content Include="Views\AttMachineTableRefrences\Index.cshtml" />
     <Content Include="Views\Senarios\Index.cshtml" />
     <Content Include="Views\AttendanceSheets\Index.cshtml" />
+    <Content Include="Views\AttendanceSheets\TableTypeList.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\AttendanceFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

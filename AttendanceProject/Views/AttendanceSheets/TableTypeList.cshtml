@@ -1,0 +1,11 @@
+﻿@model IEnumerable<AttendanceProject.Models.AttTableDefination>
+
+<div class="col-md-6">
+    <select class="form-control" id="TableID" name="TableID" required>
+        <option value=""> -- Choose from Tables -- </option>
+        @foreach (var item in Model)
+        {
+            <option value="@item.TableId">@item.ColumnDefination</option>
+        }
+    </select>
+</div>

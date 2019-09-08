@@ -172,8 +172,6 @@
             color: white;
         }
 
-
-
         html {
             height: 100%;
             box-sizing: border-box;
@@ -201,7 +199,6 @@
         .table {
             direction: ltr;
         }
-
 
             .table th {
                 text-align: left;
@@ -272,19 +269,19 @@
 
                         </li>
 
-                            <li>
-                                <a href="#"><i class="fa fa-pagelines"></i> <span class="nav-label">Attendance Parameter</span><span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <li><a href="~/AttMachines"><i class="fa fa-laptop"></i> <span class="nav-label">Define Machines</span></a></li>
-                                    <li><a href="~/AttTableDefinations"><i class="fa fa-table"></i> <span class="nav-label">Define Table Parameters</span></a></li>
-                                    <li><a href="~/AttMachineTableRefrences"><i class="fa fa-connectdevelop"></i> <span class="nav-label">Connect Machine To Table</span></a></li>
-                                </ul>
-                            </li>
+                        <li>
+                            <a href="#"><i class="fa fa-pagelines"></i> <span class="nav-label">Attendance Parameter</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="~/AttMachines"><i class="fa fa-laptop"></i> <span class="nav-label">Define Machines</span></a></li>
+                                <li><a href="~/AttTableDefinations"><i class="fa fa-table"></i> <span class="nav-label">Define Table Parameters</span></a></li>
+                                <li><a href="~/AttMachineTableRefrences"><i class="fa fa-connectdevelop"></i> <span class="nav-label">Connect Machine To Table</span></a></li>
+                            </ul>
+                        </li>
 
-                            <li>
-                                <a href="~/AttendanceLogs"><i class="fa fa-list"></i> <span class="nav-label">View Attendance</span></a>
+                        <li>
+                            <a href="~/AttendanceLogs"><i class="fa fa-list"></i> <span class="nav-label">Attendance</span></a>
 
-                            </li>   
+                        </li>
                     </ul>
 
                 </div>
@@ -368,7 +365,6 @@
 
     <script>
         $(function () {
-
             $(document).ready(function () {
                 $('#table33').DataTable({
                     colReorder: true,
@@ -380,22 +376,17 @@
                     buttons: [
                         {
                             extend: 'excelHtml5',
-                            title: 'SmaptPanFile',
+                            title: 'Innovation leading Report',
                             text: 'Excel'
-
                         },
                         {
                             extend: 'print',
-                            title: ' SmaptPanPrint',
+                            title: 'Innovation leading Report',
                             text: 'Print Table'
-
                         },
-
                     ],
                 });
-
             });
-
         });
     </script>
 
@@ -405,12 +396,12 @@
                 height: 300,                 // set editor height
                 minHeight: null,             // set minimum height of editor
                 maxHeight: null,             // set maximum height of editor
-                focus: true   
+                focus: true
             });
         });
     </script>
 
-    @if(TempData["success"] != null)
+    @if (TempData["success"] != null)
     {
         <script>
             toastr.success("@TempData["success"].ToString()");
@@ -419,11 +410,10 @@
     @if (TempData["failed"] != null)
     {
         <script>
-            toastr.success("@TempData["failed"].ToString()");
+            toastr.error("@TempData["failed"].ToString()");
         </script>
     }
 
 </body>
 
 </html>
-

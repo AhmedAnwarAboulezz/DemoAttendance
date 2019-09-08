@@ -38,30 +38,32 @@
             @Html.LabelFor(model => model.ColumnDefination, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div id="SelectSenarioDiv_1">
-                    <select id="SelectSenario_1" data-placeholder="Begin typing a name to select Product..." multiple class="brand-select1">
+                    <select id="SelectSenario_1" data-placeholder="Begin typing a name to select column with order..." multiple class="brand-select1">
                         <option value=""></option>
                         @for (var i = 0; i < ViewBag.DefinationColumns.Count; i++)
                         {
-                            foreach (var item in ViewBag.senario1)
+                            for(var r = 0; r < ViewBag.senario1.Count; r++)
                             {
-                                if (item == i)
+                                var rr = r + 1;
+                                if (ViewBag.senario1[r] == i)
                                 {
-                                    <option value="@i">@ViewBag.DefinationColumns[i]</option>
+                                    <option id="OptionSelect1_@rr" value="@i" data-order="@rr">@ViewBag.DefinationColumns[i]</option>
                                 }
                             }
                         }
                     </select>
                 </div>
                 <div id="SelectSenarioDiv_2">
-                    <select id="SelectSenario_2" data-placeholder="Begin typing a name to select Product..." multiple class="brand-select2">
+                    <select id="SelectSenario_2" data-placeholder="Begin typing a name to select column with order..." multiple class="brand-select2">
                         <option value=""></option>
                         @for (var i = 0; i < ViewBag.DefinationColumns.Count; i++)
                         {
-                            foreach (var item in ViewBag.senario2)
+                            for(var r = 0; r < ViewBag.senario2.Count; r++)
                             {
-                                if (item == i)
+                                var rr = r + 1;
+                                if (ViewBag.senario2[r] == i)
                                 {
-                                    <option value="@i">@ViewBag.DefinationColumns[i]</option>
+                                    <option id="OptionSelect2_@rr" value="@i" data-order="@rr">@ViewBag.DefinationColumns[i]</option>
                                 }
                             }
                         }
@@ -111,14 +113,18 @@
                     for (var i = namess1.length - 1; i >= 0; i--) {
                         if (inputname == "") {
                             inputname = namess1[i];
-                            inputid = idss1[i];
+                            var ids1 = idss1[i];
+                            var newids1 = $('#OptionSelect1_' + ids1).val();
+                            inputid = newids1;
                         }
                         else {
+                            var ids1 = idss1[i];
+                            var newids1 = $('#OptionSelect1_' + ids1).val();
                             inputname = namess1[i] + "," + inputname;
-                            inputid = idss1[i] + "," + inputid;
+                            inputid = newids1 + "," + inputid;
                         }
                     }
-                    $("#ColumnDefination").val(inputname);
+                    $("#ColumnDefination").val(inputname);                    
                     $("#ColumnOrder").val(inputid);
                 }
             }
@@ -128,12 +134,16 @@
                     var inputid = "";
                     for (var i = namess2.length - 1; i >= 0; i--) {
                         if (inputname == "") {
+                            var ids2 = idss2[i];
+                            var newids2 = $('#OptionSelect2_' + ids1).val();
                             inputname = namess2[i];
-                            inputid = idss2[i];
+                            inputid = newids2;
                         }
                         else {
+                            var ids2 = idss2[i];
+                            var newids2 = $('#OptionSelect2_' + ids1).val();
                             inputname = namess2[i] + "," + inputname;
-                            inputid = idss2[i] + "," + inputid;
+                            inputid = newids2 + "," + inputid;
                         }
                     }
                     $("#ColumnDefination").val(inputname);
@@ -173,17 +183,13 @@
                     idss2.push(hrefs);
                 });
             });
-
-
             $("#SelectSenarioDiv_2").hide();
-
             $("#SenarioID").change(function () {
                 var m = this.value;
                 debugger;
                 if (m == 1) {
                     $("#SelectSenarioDiv_2").hide();
                     $("#SelectSenarioDiv_1").show();
-
                 }
                 if (m == 2) {
                     $("#SelectSenarioDiv_1").hide();

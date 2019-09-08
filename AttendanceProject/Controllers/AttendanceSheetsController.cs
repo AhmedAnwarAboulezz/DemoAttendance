@@ -30,25 +30,19 @@ namespace AttendanceProject.Controllers
             return View(db.AttTableDefinations.ToList());
         }
 
+        public PartialViewResult TableTypeList()
+        {
+            var tabless = db.AttTableDefinations.ToList();
+            return PartialView(tabless);
+        }
+
         [HttpPost]
-        public void Download(int TableID, int noofdays)
+        public void Download(int TableID)
         {
             var EmployeeList = db.Employees.ToList();
             var Tablerecord = db.AttTableDefinations.Where(a => a.TableId == TableID).FirstOrDefault();
             var tablecolumn = Tablerecord.ColumnDefination.Split(',');
             var tableorder = Tablerecord.ColumnOrder.Split(',');
-
-            //var allmachinesforsenario = db.AttMachineTableRefrences.Where(a => a.TableID == TableID).Select(a => a.MachineID).ToList();
-            //List<AttMachine> machines = new List<AttMachine>();
-            //foreach(var item in allmachinesforsenario)
-            //{
-            //    var machid = db.AttMachines.Where(a => a.MachId == item).FirstOrDefault();
-            //    machines.Add(machid);
-            //}
-            //var machinetableid = db.AttMachineTableRefrences.Where(a => a.TableID == TableID).Select(a => a.Id).ToList();
-            //var attendancelog = db.AttendanceLogs.ToList();
-
-
             string Code =  "EN";
             DataTable data = new DataTable();
             Response.Clear();
@@ -82,6 +76,121 @@ namespace AttendanceProject.Controllers
 
         }
 
+
+        [HttpPost]
+        public ActionResult Upload(int? TableID,HttpPostedFileBase file, string FileDescription, string FromDate, string ToDate)
+        {
+            if(TableID == null)
+            {
+                TempData["failed"] = "Please Select a table first";
+                return RedirectToAction("Index");
+            }
+            if (file != null)
+            {
+                try
+                {
+
+                    string path1 = "";
+                    string filetype = Path.GetExtension(file.FileName).ToLower();
+
+                    if (filetype == ".xlsx" || filetype == ".xls")
+                    {
+                        if (file.ContentLength < 102400)
+                        {
+                            string filename = Path.GetFileName(file.FileName);
+                            file.SaveAs(Server.MapPath("~/Content/AttendanceFiles/") + filename);
+                            path1 = Server.MapPath("~/Content/AttendanceFiles/") + filename;
+                            ViewBag.FileName = filename;
+
+                            List<AttendanceLog> myList = new List<AttendanceLog>();
+
+                            var ColOrder = db.AttTableDefinations.Where(a => a.TableId == TableID).FirstOrDefault().ColumnOrder.Split(',');
+                            using (var package = new ExcelPackage(file.InputStream))
+                            {
+                                var currentSheet = package.Workbook.Worksheets;
+                                var workSheet = currentSheet.First();
+                                var noOfCol = workSheet.Dimension.End.Column;
+                                var noOfRow = workSheet.Dimension.End.Row;
+                                for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
+                                {
+                                    AttendanceLog FileDtls = new AttendanceLog();
+                                    if (ColOrder.Length > 0)
+                                    {
+                                        for (var i = 1; i <= ColOrder.Length; i++)
+                                        {
+                                            var colelment = int.Parse(ColOrder[i-1]);
+                                            switch (colelment)
+                                            {
+                                                case 1:
+                                                    FileDtls.Date = workSheet.Cells[rowIterator, i].Value == null ? null : Convert.ToDateTime(workSheet.Cells[rowIterator, i].Value).ToString("dd/MM/yyyy");
+                                                    break;
+                                                case 2:
+                                                    FileDtls.TimeIN = workSheet.Cells[rowIterator, i].Value == null ? null : Convert.ToDateTime(workSheet.Cells[rowIterator, i].Value).ToString("HH:mm:ss");
+                                                    break;
+                                                case 3:
+                                                    FileDtls.TimeOut = workSheet.Cells[rowIterator, i].Value == null ? null : Convert.ToDateTime(workSheet.Cells[rowIterator, i].Value).ToString("HH:mm:ss"); 
+                                                    break;
+                                                case 4:
+                                                    FileDtls.TimeFunction = workSheet.Cells[rowIterator, i].Value == null ? null : Convert.ToDateTime(workSheet.Cells[rowIterator, i].Value).ToString("HH:mm:ss");
+                                                    break;
+                                                case 5:
+                                                    FileDtls.FunctionID = workSheet.Cells[rowIterator, i].Value.ToString();
+                                                    break;
+                                                case 6:
+                                                    FileDtls.EmployeeID = int.Parse(workSheet.Cells[rowIterator, i].Value.ToString());
+                                                    break;
+                                                case 7:
+                                                    var checkid = int.Parse(workSheet.Cells[rowIterator, i].Value.ToString());
+                                                        var machinetableid = db.AttMachineTableRefrences.Where(a => a.MachineID == checkid && a.TableID == TableID).FirstOrDefault();
+                                                        if (machinetableid != null)
+                                                        {
+                                                            FileDtls.MachineTableID = machinetableid.Id;
+                                                            break;
+                                                        }
+                                                        else
+                                                        {
+                                                            TempData["failed"] = "MachineId "+ checkid + " doesn't define to a table in the system";
+                                                            return RedirectToAction("Index");
+                                                        }
+                                                    break;
+                                                case 8:
+                                                    FileDtls.Comment = workSheet.Cells[rowIterator, i].Value.ToString();
+                                                    break;
+                                                default:
+                                                    TempData["failed"] = "There's an error";
+                                                    return RedirectToAction("Index");
+                                                    break;
+
+                                            }
+                                        }
+                                    }
+                                    myList.Add(FileDtls);
+                                }
+                                foreach(var lists in myList)
+                                {
+                                    db.AttendanceLogs.Add(lists);
+                                    db.SaveChanges();
+                                }
+                            }
+                        }
+
+                        TempData["success"] = "Process Done Successfully";
+
+                    }
+                    return RedirectToAction("Index");
+
+
+                }
+                catch (Exception e)
+                {
+                    TempData["failed"] = e.Message;
+                    return RedirectToAction("Index");
+                }
+            }
+            TempData["failed"] = "No file Uploaded";
+            return RedirectToAction("Index");
+
+        }
 
 
 

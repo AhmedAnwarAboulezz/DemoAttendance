@@ -10,43 +10,47 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ColumnDefination)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ColumnOrder)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Senario.SenarioName)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ColumnDefination)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ColumnOrder)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsDeleted)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Senario.SenarioName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TableId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TableId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TableId })
-        </td>
-    </tr>
-}
+<table class="table" id="table33">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ColumnDefination)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ColumnOrder)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsDeleted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Senario.SenarioName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ColumnDefination)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ColumnOrder)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsDeleted)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Senario.SenarioName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.TableId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.TableId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.TableId })
+                </td>
+            </tr>
+        }
+    </tbody>
 
 </table>
