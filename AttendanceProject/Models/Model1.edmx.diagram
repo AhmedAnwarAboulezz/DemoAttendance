@@ -4,16 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="82a524bd70da440ebf52ada3fe8b411c" Name="Diagram1">
-        <EntityTypeShape EntityType="AttendanceModel.AttendanceLog" Width="1.5" PointX="7.5" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AttendanceModel.AttMachine" Width="1.5" PointX="3" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="AttendanceModel.AttMachineTableRefrence" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="AttendanceModel.AttTableDefination" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+      <Diagram DiagramId="c56bef1eedde4c54baa42befb10f1c5d" Name="Diagram1">
+        <EntityTypeShape EntityType="AttendanceModel.AttendanceLog" Width="1.5" PointX="7.5" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AttendanceModel.AttMachine" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AttendanceModel.AttMachineTableRefrence" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AttendanceModel.AttTableDefination" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="AttendanceModel.Employee" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AttendanceModel.Senario" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AttendanceModel.sysdiagram" Width="1.5" PointX="5.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AttendanceModel.FileRefrence" Width="1.5" PointX="5.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AttendanceModel.Senario" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AttendanceModel.sysdiagram" Width="1.5" PointX="7.75" PointY="8.5" IsExpanded="true" />
         <AssociationConnector Association="AttendanceModel.FK_AttendanceLog_AttMachineTableRefrence" ManuallyRouted="false" />
         <AssociationConnector Association="AttendanceModel.FK_AttendanceLog_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="AttendanceModel.FK_AttendanceLog_FileRefrence" ManuallyRouted="false" />
         <AssociationConnector Association="AttendanceModel.FK_AttMachine_Senarios" ManuallyRouted="false" />
         <AssociationConnector Association="AttendanceModel.FK_AttMachineTableRefrence_AttMachine" ManuallyRouted="false" />
         <AssociationConnector Association="AttendanceModel.FK_AttMachineTableRefrence_AttTableDefination" ManuallyRouted="false" />

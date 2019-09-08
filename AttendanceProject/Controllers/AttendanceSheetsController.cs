@@ -97,10 +97,22 @@ namespace AttendanceProject.Controllers
                     {
                         if (file.ContentLength < 102400)
                         {
+                            String unique = DateTime.Now.ToString("yyyyMMddHHmmssfff");
                             string filename = Path.GetFileName(file.FileName);
-                            file.SaveAs(Server.MapPath("~/Content/AttendanceFiles/") + filename);
-                            path1 = Server.MapPath("~/Content/AttendanceFiles/") + filename;
+                            file.SaveAs(Server.MapPath("~/Content/AttendanceFiles/") + unique + filename);
+                            var path = "Content/AttendanceFiles/" + unique + filename;
+                            path1 = Server.MapPath("~/Content/AttendanceFiles/") + unique + filename;
                             ViewBag.FileName = filename;
+                            FileRefrence fileref = new FileRefrence();
+                            fileref.FilePath = path;
+                            var guidid = Guid.NewGuid().ToString().Split('-')[0];
+                            fileref.FileNumber = guidid;
+                            fileref.CreatedDate = DateTime.Now;
+                            fileref.Comment = FileDescription;
+                            db.FileRefrences.Add(fileref);
+                            db.SaveChanges();
+                            var fileid = fileref.Id;
+
 
                             List<AttendanceLog> myList = new List<AttendanceLog>();
 
@@ -119,10 +131,29 @@ namespace AttendanceProject.Controllers
                                         for (var i = 1; i <= ColOrder.Length; i++)
                                         {
                                             var colelment = int.Parse(ColOrder[i-1]);
+                                            FileDtls.FileID = fileid;
                                             switch (colelment)
                                             {
                                                 case 1:
-                                                    FileDtls.Date = workSheet.Cells[rowIterator, i].Value == null ? null : Convert.ToDateTime(workSheet.Cells[rowIterator, i].Value).ToString("dd/MM/yyyy");
+                                                    var olddate = workSheet.Cells[rowIterator, i].Value.ToString();
+                                                    if(olddate.Contains('/'))
+                                                    {
+                                                        var oDate = olddate.Split('/');
+                                                        var month = oDate[1];
+                                                        var day = oDate[0];
+                                                        var year = oDate[2].Split(new string[] { " " }, StringSplitOptions.None)[0];
+                                                        if (month.Length < 2) { month = "0" + month; }
+                                                        if (day.Length < 2) { day = "0" + day; }
+                                                        var newdate = day + "/" + month + "/" + year;
+                                                        FileDtls.Date = newdate;
+                                                    }
+                                                    else
+                                                    {
+                                                        var oDate2 = DateTime.ParseExact(olddate, "dd/MM/yyyy", null);
+                                                    }
+                                                    //var newdate = olddate[1] + '/' + olddate[0] + '/' + olddate[2];
+                                                    //var nndate = newdate.ToString("dd/mm/yyyy");
+                                                    //FileDtls.Date = workSheet.Cells[rowIterator, i].Value == null ? null : Convert.ToDateTime(workSheet.Cells[rowIterator, i].Value).ToString("dd/MM/yyyy");
                                                     break;
                                                 case 2:
                                                     FileDtls.TimeIN = workSheet.Cells[rowIterator, i].Value == null ? null : Convert.ToDateTime(workSheet.Cells[rowIterator, i].Value).ToString("HH:mm:ss");

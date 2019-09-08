@@ -32,6 +32,7 @@ namespace AttendanceProject.Models
         public virtual DbSet<AttMachineTableRefrence> AttMachineTableRefrences { get; set; }
         public virtual DbSet<AttTableDefination> AttTableDefinations { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<FileRefrence> FileRefrences { get; set; }
         public virtual DbSet<Senario> Senarios { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     

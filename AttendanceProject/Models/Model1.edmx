@@ -18,6 +18,7 @@
           <Property Name="EmployeeID" Type="int" />
           <Property Name="MachineTableID" Type="int" />
           <Property Name="Comment" Type="nvarchar(max)" />
+          <Property Name="FileID" Type="int" />
         </EntityType>
         <EntityType Name="AttMachine">
           <Key>
@@ -53,6 +54,17 @@
           <Property Name="EmployeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ReferenceNumber" Type="nvarchar(max)" />
           <Property Name="EmployeeName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="FileRefrence">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FileNumber" Type="nvarchar(max)" />
+          <Property Name="FilePath" Type="nvarchar(max)" />
+          <Property Name="Comment" Type="nvarchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="IsActive" Type="int" />
         </EntityType>
         <EntityType Name="Senarios">
           <Key>
@@ -96,6 +108,20 @@
             </Principal>
             <Dependent Role="AttendanceLog">
               <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttendanceLog_FileRefrence">
+          <End Role="FileRefrence" Type="Self.FileRefrence" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AttendanceLog" Type="Self.AttendanceLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FileRefrence">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AttendanceLog">
+              <PropertyRef Name="FileID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -188,6 +214,7 @@
           <EntitySet Name="AttMachineTableRefrence" EntityType="Self.AttMachineTableRefrence" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AttTableDefination" EntityType="Self.AttTableDefination" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FileRefrence" EntityType="Self.FileRefrence" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Senarios" EntityType="Self.Senarios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AttendanceLog_AttMachineTableRefrence" Association="Self.FK_AttendanceLog_AttMachineTableRefrence">
@@ -196,6 +223,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_AttendanceLog_Employee" Association="Self.FK_AttendanceLog_Employee">
             <End Role="Employee" EntitySet="Employee" />
+            <End Role="AttendanceLog" EntitySet="AttendanceLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttendanceLog_FileRefrence" Association="Self.FK_AttendanceLog_FileRefrence">
+            <End Role="FileRefrence" EntitySet="FileRefrence" />
             <End Role="AttendanceLog" EntitySet="AttendanceLog" />
           </AssociationSet>
           <AssociationSet Name="FK_AttMachine_Senarios" Association="Self.FK_AttMachine_Senarios">
@@ -233,8 +264,10 @@
           <Property Name="EmployeeID" Type="Int32" />
           <Property Name="MachineTableID" Type="Int32" />
           <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FileID" Type="Int32" />
           <NavigationProperty Name="AttMachineTableRefrence" Relationship="Self.FK_AttendanceLog_AttMachineTableRefrence" FromRole="AttendanceLog" ToRole="AttMachineTableRefrence" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_AttendanceLog_Employee" FromRole="AttendanceLog" ToRole="Employee" />
+          <NavigationProperty Name="FileRefrence" Relationship="Self.FK_AttendanceLog_FileRefrence" FromRole="AttendanceLog" ToRole="FileRefrence" />
         </EntityType>
         <EntityType Name="AttMachine">
           <Key>
@@ -278,6 +311,18 @@
           <Property Name="ReferenceNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="EmployeeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AttendanceLogs" Relationship="Self.FK_AttendanceLog_Employee" FromRole="Employee" ToRole="AttendanceLog" />
+        </EntityType>
+        <EntityType Name="FileRefrence">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FileNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FilePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Int32" />
+          <NavigationProperty Name="AttendanceLogs" Relationship="Self.FK_AttendanceLog_FileRefrence" FromRole="FileRefrence" ToRole="AttendanceLog" />
         </EntityType>
         <EntityType Name="Senario">
           <Key>
@@ -323,6 +368,20 @@
             </Principal>
             <Dependent Role="AttendanceLog">
               <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttendanceLog_FileRefrence">
+          <End Role="FileRefrence" Type="Self.FileRefrence" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AttendanceLog" Type="Self.AttendanceLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FileRefrence">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AttendanceLog">
+              <PropertyRef Name="FileID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -384,6 +443,7 @@
           <EntitySet Name="AttMachineTableRefrences" EntityType="Self.AttMachineTableRefrence" />
           <EntitySet Name="AttTableDefinations" EntityType="Self.AttTableDefination" />
           <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="FileRefrences" EntityType="Self.FileRefrence" />
           <EntitySet Name="Senarios" EntityType="Self.Senario" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <AssociationSet Name="FK_AttendanceLog_AttMachineTableRefrence" Association="Self.FK_AttendanceLog_AttMachineTableRefrence">
@@ -392,6 +452,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_AttendanceLog_Employee" Association="Self.FK_AttendanceLog_Employee">
             <End Role="Employee" EntitySet="Employees" />
+            <End Role="AttendanceLog" EntitySet="AttendanceLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttendanceLog_FileRefrence" Association="Self.FK_AttendanceLog_FileRefrence">
+            <End Role="FileRefrence" EntitySet="FileRefrences" />
             <End Role="AttendanceLog" EntitySet="AttendanceLogs" />
           </AssociationSet>
           <AssociationSet Name="FK_AttMachine_Senarios" Association="Self.FK_AttMachine_Senarios">
@@ -470,6 +534,7 @@
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
                 <ScalarProperty Name="MachineTableID" ColumnName="MachineTableID" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -509,6 +574,18 @@
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="ReferenceNumber" ColumnName="ReferenceNumber" />
                 <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FileRefrences">
+            <EntityTypeMapping TypeName="AttendanceModel.FileRefrence">
+              <MappingFragment StoreEntitySet="FileRefrence">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FileNumber" ColumnName="FileNumber" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

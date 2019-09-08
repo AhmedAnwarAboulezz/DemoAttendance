@@ -17,7 +17,7 @@ namespace AttendanceProject.Controllers
         // GET: AttendanceLogs
         public ActionResult Index()
         {
-            var attendanceLogs = db.AttendanceLogs.Include(a => a.AttMachineTableRefrence).Include(a => a.Employee);
+            var attendanceLogs = db.AttendanceLogs.Where(a=>a.FileRefrence.IsActive == 1).Include(a => a.AttMachineTableRefrence).Include(a => a.Employee);
             return View(attendanceLogs.ToList());
         }
 

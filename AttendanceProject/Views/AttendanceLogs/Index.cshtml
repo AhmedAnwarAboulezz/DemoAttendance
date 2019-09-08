@@ -8,7 +8,7 @@
 <h2>Attendance</h2>
 
 
-<a class="btn btn-default" href="~/AttendanceSheets"><i calss="fa fa-upload"></i> Upload Attendance</a>
+<a class="btn btn-default" href="~/AttendanceSheets"><span calss="fa fa-upload"></span> Upload Attendance</a>
 
 <table class="table" id="table33">
     <thead>
@@ -32,11 +32,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.FunctionID)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Comment)
-            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.AttMachineTableRefrence.MachineID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileRefrence.FileNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AttMachineTableRefrence.AttTableDefination.Senario.SenarioName)
             </th>
         </tr>
 
@@ -65,12 +69,14 @@
                     @Html.DisplayFor(modelItem => item.FunctionID)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Comment)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.AttMachineTableRefrence.MachineID)
                 </td>
-
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileRefrence.FileNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AttMachineTableRefrence.AttTableDefination.Senario.SenarioName)
+                </td>
             </tr>
         }
     </tbody>
