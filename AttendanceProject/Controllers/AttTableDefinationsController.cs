@@ -44,8 +44,8 @@ namespace AttendanceProject.Controllers
         {
 
             ViewBag.SenarioID = new SelectList(db.Senarios, "Id", "SenarioName");
-            List<int> senario1 = new List<int> {1, 2, 3, 6, 7, 8 };
-            List<int> senario2 = new List<int> { 1, 4, 5, 6, 7, 8 };
+            List<int> senario1 = new List<int> {1, 2, 3, 6, 7};
+            List<int> senario2 = new List<int> { 1, 4, 5, 6, 7};
             var Allcolumn = typeof(AttendanceLog).GetMembers().Where(p => p.MemberType == MemberTypes.Property).Select(a=>a.Name).ToList();
             ViewBag.DefinationColumns = Allcolumn;
             ViewBag.senario1 = senario1;

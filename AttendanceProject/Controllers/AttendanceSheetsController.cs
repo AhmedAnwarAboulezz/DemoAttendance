@@ -132,6 +132,7 @@ namespace AttendanceProject.Controllers
                                         {
                                             var colelment = int.Parse(ColOrder[i-1]);
                                             FileDtls.FileID = fileid;
+                                            FileDtls.UploadedType = "File";
                                             switch (colelment)
                                             {
                                                 case 1:
@@ -142,6 +143,13 @@ namespace AttendanceProject.Controllers
                                                         var month = oDate[1];
                                                         var day = oDate[0];
                                                         var year = oDate[2].Split(new string[] { " " }, StringSplitOptions.None)[0];
+                                                        int valmonth = int.Parse(month);
+                                                        if(valmonth > 12)
+                                                        {
+                                                            TempData["failed"] = "Month shouldn't be more than 12";
+                                                            Removefile(fileid);
+                                                            return RedirectToAction("Index");
+                                                        }
                                                         if (month.Length < 2) { month = "0" + month; }
                                                         if (day.Length < 2) { day = "0" + day; }
                                                         var newdate = day + "/" + month + "/" + year;
@@ -149,6 +157,7 @@ namespace AttendanceProject.Controllers
                                                     }
                                                     else
                                                     {
+                                                        Removefile(fileid);
                                                         var oDate2 = DateTime.ParseExact(olddate, "dd/MM/yyyy", null);
                                                     }
                                                     //var newdate = olddate[1] + '/' + olddate[0] + '/' + olddate[2];
@@ -181,14 +190,14 @@ namespace AttendanceProject.Controllers
                                                         else
                                                         {
                                                             TempData["failed"] = "MachineId "+ checkid + " doesn't define to a table in the system";
+                                                             Removefile(fileid);
                                                             return RedirectToAction("Index");
                                                         }
                                                     break;
-                                                case 8:
-                                                    FileDtls.Comment = workSheet.Cells[rowIterator, i].Value.ToString();
-                                                    break;
+
                                                 default:
                                                     TempData["failed"] = "There's an error";
+                                                    Removefile(fileid);
                                                     return RedirectToAction("Index");
                                                     break;
 
@@ -223,6 +232,18 @@ namespace AttendanceProject.Controllers
 
         }
 
+
+        public void Removefile(int fileid)
+        {
+            FileRefrence fileRefrence = db.FileRefrences.Find(fileid);
+            string fullPath = Request.MapPath("~/" + fileRefrence.FilePath);
+            if (System.IO.File.Exists(fullPath))
+            {
+                System.IO.File.Delete(fullPath);
+            }
+            db.FileRefrences.Remove(fileRefrence);
+            db.SaveChanges();
+        }
 
 
 

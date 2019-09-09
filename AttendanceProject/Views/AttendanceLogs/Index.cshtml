@@ -8,7 +8,7 @@
 <h2>Attendance</h2>
 
 
-<a class="btn btn-default" href="~/AttendanceSheets"><span calss="fa fa-upload"></span> Upload Attendance</a>
+<a class="btn btn-primary" href="~/AttendanceSheets"><span calss="fa fa-upload"></span> Upload Attendance</a>
 
 <table class="table" id="table33">
     <thead>
@@ -35,6 +35,9 @@
 
             <th>
                 @Html.DisplayNameFor(model => model.AttMachineTableRefrence.MachineID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UploadedType)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FileRefrence.FileNumber)
@@ -70,6 +73,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AttMachineTableRefrence.MachineID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UploadedType)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.FileRefrence.FileNumber)

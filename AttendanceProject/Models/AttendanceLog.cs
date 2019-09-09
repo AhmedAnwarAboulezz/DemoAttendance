@@ -22,7 +22,7 @@ namespace AttendanceProject.Models
         public string FunctionID { get; set; }
         public Nullable<int> EmployeeID { get; set; }
         public Nullable<int> MachineTableID { get; set; }
-        public string Comment { get; set; }
+        public string UploadedType { get; set; }
         public Nullable<int> FileID { get; set; }
     
         public virtual AttMachineTableRefrence AttMachineTableRefrence { get; set; }

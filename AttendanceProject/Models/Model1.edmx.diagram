@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c56bef1eedde4c54baa42befb10f1c5d" Name="Diagram1">
+      <Diagram DiagramId="bf4a1c92ea8445a69cc454acd94a1e1d" Name="Diagram1">
         <EntityTypeShape EntityType="AttendanceModel.AttendanceLog" Width="1.5" PointX="7.5" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="AttendanceModel.AttMachine" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="AttendanceModel.AttMachineTableRefrence" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />

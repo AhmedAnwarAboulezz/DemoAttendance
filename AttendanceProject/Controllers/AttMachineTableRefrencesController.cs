@@ -55,6 +55,13 @@ namespace AttendanceProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                var machineid = attMachineTableRefrence.MachineID;
+                var check = db.AttMachineTableRefrences.Where(a => a.MachineID == machineid).Count();
+                if(check > 0)
+                {
+                    TempData["failed"] = "This machine is already assign to table before";
+                    return RedirectToAction("Create");
+                }
                 db.AttMachineTableRefrences.Add(attMachineTableRefrence);
                 db.SaveChanges();
                 return RedirectToAction("Index");

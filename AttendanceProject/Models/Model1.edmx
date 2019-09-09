@@ -17,7 +17,7 @@
           <Property Name="FunctionID" Type="nvarchar(max)" />
           <Property Name="EmployeeID" Type="int" />
           <Property Name="MachineTableID" Type="int" />
-          <Property Name="Comment" Type="nvarchar(max)" />
+          <Property Name="UploadedType" Type="nvarchar(max)" />
           <Property Name="FileID" Type="int" />
         </EntityType>
         <EntityType Name="AttMachine">
@@ -263,7 +263,7 @@
           <Property Name="FunctionID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="EmployeeID" Type="Int32" />
           <Property Name="MachineTableID" Type="Int32" />
-          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UploadedType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FileID" Type="Int32" />
           <NavigationProperty Name="AttMachineTableRefrence" Relationship="Self.FK_AttendanceLog_AttMachineTableRefrence" FromRole="AttendanceLog" ToRole="AttMachineTableRefrence" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_AttendanceLog_Employee" FromRole="AttendanceLog" ToRole="Employee" />
@@ -533,7 +533,7 @@
                 <ScalarProperty Name="FunctionID" ColumnName="FunctionID" />
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
                 <ScalarProperty Name="MachineTableID" ColumnName="MachineTableID" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="UploadedType" ColumnName="UploadedType" />
                 <ScalarProperty Name="FileID" ColumnName="FileID" />
               </MappingFragment>
             </EntityTypeMapping>

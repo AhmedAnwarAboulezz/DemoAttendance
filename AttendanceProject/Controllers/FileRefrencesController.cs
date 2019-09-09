@@ -110,6 +110,11 @@ namespace AttendanceProject.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             FileRefrence fileRefrence = db.FileRefrences.Find(id);
+            string fullPath = Request.MapPath("~/" + fileRefrence.FilePath);
+            if (System.IO.File.Exists(fullPath))
+            {
+                System.IO.File.Delete(fullPath);
+            }
             db.FileRefrences.Remove(fileRefrence);
             db.SaveChanges();
             return RedirectToAction("Index");
